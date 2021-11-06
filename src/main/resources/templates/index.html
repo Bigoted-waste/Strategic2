@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+	<title>专项经费项目库管理系统-登录</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link th:href="@{/css/login.css}" rel="stylesheet" type="text/css" media="all" />
+</head>
+<body>
+
+<!-- main -->
+<div class="main-w3layouts wrapper">
+	<div class="main-agileinfo">
+		<div class="agileits-top">
+			<form th:action="@{/user/login}" method="post">
+				<input class="text" type="text" name="username" placeholder="账号" required="">
+				<input class="text" type="password" name="password" placeholder="密码" required="">
+				<!--<div class="wthree-text">
+					<ul>
+						<li>
+							<label class="anim">
+								<input type="radio" class="checkbox" required="" name="user">
+								<span> 管理员</span>
+							</label>
+						</li>
+						<li>
+							<label class="anim">
+								<input type="radio" class="checkbox" required="" name="user">
+								<span> 用户</span>
+							</label>
+						</li>
+						<li><a href="#">忘记密码 ?</a> </li>
+					</ul>
+					<div class="clear"> </div>
+				</div>   -->
+				<p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+				<input type="submit" value="登录">
+			</form>
+			<p><a href="#">天津职业技术师范大学(战略办)</a></p>
+			<p><a href="#">专项经费项目库管理系统</a></p>
+		</div>
+	</div>
+	<!-- //copyright -->
+	<ul class="w3lsg-bubbles">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</div>
+</body>
+</html>
+

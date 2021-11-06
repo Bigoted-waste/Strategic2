@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+	<title>专项经费项目库管理系统</title>
+	<link rel="stylesheet" th:href="@{/css/index.css}" />
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+	<script type="text/javascript" th:src="@{/js/echarts.min -5.2.0.js}"></script>
+	<!--<link rel="icon" href="images/hb16x16.ico" mce_href="images/hb16x16.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/hb16x16.ico" mce_href="images/hb16x16.ico" type="image/x-icon">-->
+</head>
+<body>
+<div class="content1" style="background-color: #EFEDEF">
+	<!--			<iframe th:src="@{css/1.html}" id="ifrm" ></iframe>-->
+
+	<div class="_title">
+		<p>index / 天津职业技术师范大学&nbsp;—&nbsp;专项经费项目库管理系统</p>
+	</div>
+
+	<div class="statistics">
+		<div class="statistics_text">
+			<div class="statistics_text_block">
+				<div class="statistics_text_block_p">
+					<img th:src="@{/images/m0.png}"/>
+					<div class="statistics_text_block_left">
+						<p>全部经费</p>
+					</div>
+				</div>
+				<div class="statistics_text_block_text">
+					[[${allCapital}]]
+				</div>
+			</div>
+			<div class="statistics_text_block">
+				<div class="statistics_text_block_p">
+					<img th:src="@{/images/m1.png}"/>
+					<div class="statistics_text_block_left">
+						<p>[[${year}]]年经费</p>
+					</div>
+				</div>
+				<div class="statistics_text_block_text">
+					[[${capital2021}]]
+				</div>
+			</div>
+			<div class="statistics_text_block">
+				<div class="statistics_text_block_p">
+					<img th:src="@{/images/p0.png}"/>
+					<div class="statistics_text_block_left">
+						<p>全部项目总数</p>
+					</div>
+				</div>
+				<div class="statistics_text_block_text">
+					[[${allProjectNumber}]]
+				</div>
+			</div>
+			<div class="statistics_text_block">
+				<div class="statistics_text_block_p">
+					<img th:src="@{/images/p1.png}"/>
+					<div class="statistics_text_block_left">
+						<p>[[${year}]]年项目总数</p>
+					</div>
+				</div>
+				<div class="statistics_text_block_text">
+					[[${projectNumber2021}]]
+				</div>
+			</div>
+			<div class="statistics_text_block">
+				<div class="statistics_text_block_p">
+					<img th:src="@{/images/year.png}"/>
+					<div class="statistics_text_block_left">
+						<p>年份设置</p>
+					</div>
+				</div>
+				<div class="statistics_text_block_set">
+					<form th:action="@{/qsm}" method="post">
+						<div class="statistics_text_block_set_block">
+							<p>年段:&nbsp;&nbsp;</p>
+							<!-- <input name="" type="text" /> -->
+							<select name="startYear">
+								<option>2016</option>
+								<option>2017</option>
+								<option>2018</option>
+								<option>2019</option>
+								<option th:selected="${year.equals('2020')}" value="2020">2020</option>
+								<option th:selected="${year.equals('2021')}" value="2021">2021</option>
+								<option th:selected="${year.equals('2022')}" value="2022">2022</option>
+							</select>
+							<p>&nbsp;&nbsp;-&nbsp;&nbsp;</p>
+							<!-- <input name="" type="text" /> -->
+							<select name="endYear">
+								<option>2016</option>
+								<option>2017</option>
+								<option>2018</option>
+								<option>2019</option>
+								<option th:selected="${year.equals('2020')}" value="2020">2020</option>
+								<option th:selected="${year.equals('2021')}" value="2021">2021</option>
+							</select>
+						</div>
+<!--						<div class="statistics_text_block_set_block">-->
+<!--							<p>年份:&nbsp;&nbsp;</p>-->
+<!--							&lt;!&ndash; <input type="text"/>  &ndash;&gt;-->
+<!--							<select>-->
+<!--								<option>2012</option>-->
+<!--								<option>2013</option>-->
+<!--								<option>2014</option>-->
+<!--								<option>2015</option>-->
+<!--								<option>2016</option>-->
+<!--								<option>2017</option>-->
+<!--								<option>2018</option>-->
+<!--								<option>2019</option>-->
+<!--								<option th:selected="${year.equals('2020')}" value="2020">2020</option>-->
+<!--								<option th:selected="${year.equals('2021')}" value="2021">2021</option>-->
+<!--							</select>-->
+<!--						</div>-->
+						<div class="statistics_text_block_set_block_submit">
+							<input type="submit" value="确定"/>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="statistics_chart">
+			<div class="statistics_sector" id="sector_all"></div>
+			<div class="statistics_sector" id="sector_year"></div>
+			<div class="statistics_strip" id="strip_year"></div>
+		</div>
+		<div class="statistics_category" id="statistics_category"></div>
+	</div>
+	<script type="text/javascript">
+		var stripYear = echarts.init(document.getElementById('strip_year'));
+		var sectorAll = echarts.init(document.getElementById('sector_all'));
+		var sectorYear = echarts.init(document.getElementById('sector_year'));
+		var statisticsCategory = echarts.init(document.getElementById('statistics_category'));
+		var strip_year = {
+			title: {
+				text: '折线图堆叠',
+				top:'87%',
+				// subtext: 'Fake Data',
+				left: 'center'
+			},
+			tooltip: {
+				trigger: 'axis'
+			},
+			legend: {
+				data: ['教学实验平台', '科研平台', '实践基地', '公共服务体系', '人才队伍建设', '全部']
+			},
+			xAxis: {
+				type: 'category',
+				boundaryGap: false,
+				data: ['2015', '2016', '2017', '2018', '2019', '2020', '2021']
+			},
+			yAxis: {
+				type: 'value'
+			},
+			series: [{
+				name: '教学实验平台',
+				type: 'line',
+				stack: '总量',
+				data: [120, 132, 101, 134, 90, 230, 210]
+			},
+				{
+					name: '科研平台',
+					type: 'line',
+					stack: '总量',
+					data: [220, 182, 191, 234, 290, 330, 310]
+				},
+				{
+					name: '实践基地',
+					type: 'line',
+					stack: '总量',
+					data: [150, 232, 201, 154, 190, 330, 410]
+				},
+				{
+					name: '公共服务体系',
+					type: 'line',
+					stack: '总量',
+					data: [320, 332, 301, 334, 390, 330, 320]
+				},
+				{
+					name: '人才队伍建设',
+					type: 'line',
+					stack: '总量',
+					data: [820, 932, 901, 934, 1290, 1330, 1320]
+				}, {
+					name: '全部',
+					type: 'line',
+					stack: '总量',
+					data: [1820, 1932, 1901, 1934, 2290, 1330, 1320]
+				}
+			]
+		};
+		stripYear.setOption(strip_year);
+		var sector_all = {
+			title: {
+				text: '全部项目数',
+				top:'87%',
+				// subtext: 'Fake Data',
+				left: 'center'
+			},
+			tooltip: {
+				trigger: 'item'
+			},
+			legend: {
+				top: '5%',
+				left: 'center'
+			},
+			series: [{
+				name: '项目类型',
+				type: 'pie',
+				radius: ['40%', '70%'],
+				avoidLabelOverlap: false,
+				itemStyle: {
+					borderRadius: 10,
+					borderColor: '#fff',
+					borderWidth: 2
+				},
+				label: {
+					show: false,
+					position: 'center'
+				},
+				emphasis: {
+					label: {
+						show: true,
+						fontSize: '40',
+						fontWeight: 'bold'
+					}
+				},
+				labelLine: {
+					show: false
+				},
+				data: [{
+					value: 1048,
+					name: '教学实验平台'
+				},
+					{
+						value: 735,
+						name: '科研平台'
+					},
+					{
+						value: 580,
+						name: '实践基地'
+					},
+					{
+						value: 484,
+						name: '公共服务体系'
+					},
+					{
+						value: 300,
+						name: '人才队伍建设'
+					}
+				]
+			}]
+		};
+		sectorAll.setOption(sector_all);
+		var sector_year = {
+			title: {
+				text: '2021年项目数量',
+				top:'87%',
+				// subtext: 'Fake Data',
+				left: 'center'
+			},
+			tooltip: {
+				trigger: 'item'
+			},
+			legend: {
+				top: '5%',
+				left: 'center'
+			},
+			series: [{
+				name: '访问来源',
+				type: 'pie',
+				radius: ['40%', '70%'],
+				avoidLabelOverlap: false,
+				itemStyle: {
+					borderRadius: 10,
+					borderColor: '#fff',
+					borderWidth: 2
+				},
+				label: {
+					show: false,
+					position: 'center'
+				},
+				emphasis: {
+					label: {
+						show: true,
+						fontSize: '40',
+						fontWeight: 'bold'
+					}
+				},
+				labelLine: {
+					show: false
+				},
+				data: [{
+					value: 1048,
+					name: '教学实验平台'
+				},
+					{
+						value: 735,
+						name: '科研平台'
+					},
+					{
+						value: 580,
+						name: '实践基地'
+					},
+					{
+						value: 484,
+						name: '公共服务体系'
+					},
+					{
+						value: 300,
+						name: '人才队伍建设'
+					}
+				]
+			}]
+		};
+		sectorYear.setOption(sector_year);
+		var statistics_category = {
+			title: {
+				text: '2021年条形统计图',
+				top:'84%',
+				// subtext: 'Fake Data',
+				left: 'center'
+			},
+			xAxis: {
+				type: 'category',
+				data: ['xm', 'xh', 'xw']
+			},
+			yAxis: {
+				type: 'value'
+			},
+			series: [{
+				name: 'yuwu',
+				type: 'bar',
+				data: [70, 92, 87]
+			}]
+		}
+		statisticsCategory.setOption(statistics_category);
+	</script>
+</div>
+
+<div class="button1">
+	<div class="buttonone1">
+		<a th:href="@{/sm}">
+			<img th:src="@{/images/1.jpg}" />
+		</a>
+	</div>
+	<div class="buttonone1">
+		<a th:href="@{/allp}" >
+			<img th:src="@{/images/2.jpg}" />
+		</a>
+	</div>
+	<div class="buttonone1">
+		<a th:href="@{/query}">
+			<img th:src="@{/images/3.jpg}" />
+		</a>
+	</div>
+</div>
+
+</body>
+</html>

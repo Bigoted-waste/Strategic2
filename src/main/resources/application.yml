@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    username: root
+    password: 123
+    # 进入时区报错了，就增加一个时区的配置就ok了，serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/strategic?useUnicode==true&characterEncoding=utf-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # 关闭模板引擎的缓存
+  thymeleaf:
+    cache: false
+
+server:
+  servlet:
+    context-path: /zlb
+  port: 9771
+
+mybatis:
+  type-aliases-package: com.cola.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml
+##整合mybatis

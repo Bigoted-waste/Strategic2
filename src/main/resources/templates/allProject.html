@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>所有项目文件</title>
+        <link rel="stylesheet" th:href="@{/css/index.css}" />
+        <link rel="stylesheet" th:href="@{/css/style.css}" />
+        <script type="text/javascript">
+            function newwindow(){
+                //window.open (".html", "newwindow", "height=100, width=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+            }
+        </script>
+    </head>
+    <body>
+
+
+        <div class="button">
+			<a href=""><div class="buttonone">全部浏览</div></a>
+			<a href=""><div class="buttonone">全部下载</div></a>
+			<a th:href="@{/ul}"><div class="buttonone">上传</div></a>
+		</div>
+
+
+        <div class="_title">
+            <p>index / 项目申请管理</p>
+        </div>
+
+        <form>
+            <div class="table_2">
+                <table>
+                    <tr class="trd">
+                        <td class="trd">编号</td>
+                        <td class="trd">项目名称</td>
+                        <td class="trd">申请书</td>
+                        <td class="trd">时间</td>
+                        <td class="trd">功能</td>
+                    </tr>
+                    <tr th:each="pm:${list}">
+                        <td th:text="${pm.getId()}"></td>
+                        <td th:text="${pm.getProject_name()}"></td>
+                        <td>
+<!--                            @{/emp/{id}(id=${emp.getId()})}-->
+                            <a class="application" id="application_1" th:href="@{/gpa}" name="申请表" title="中央财政支持地方高校发展专项资金项目申请书">申请书</a>
+                            <a class="application" id="application_2" th:href="@{/gpo}" name="绩效目标表" title="中央对地方专项转移支付区域效绩目标表">效绩目标表</a>
+                            <a class="application" id="application_3" th:href="@{/gep}" name="购置明细表" title="支持地方高校改革资金设备购置明细表">设备明细表</a>
+
+                        </td>
+                        <td th:text="${#dates.format(pm.getCreation_time(),'yyyy-MM-dd')}"></td>
+                        <td>
+<!--                            <a class="application" id="application_4" href="#">全部浏览</a>-->
+                            <a class="application" id="application_5" th:href="@{/delp/{id}(id=${pm.getId()})}">删除</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+        <div class="button1">
+            <div class="buttonone1">
+                <a th:href="@{/sm}">
+                    <img th:src="@{images/1.jpg}" />
+                </a>
+            </div>
+            <div class="buttonone1">
+                <a th:href="@{/allp}" >
+                    <img th:src="@{images/2.jpg}" />
+                </a>
+            </div>
+            <div class="buttonone1">
+                <a th:href="@{/query}">
+                    <img th:src="@{images/3.jpg}" />
+                </a>
+            </div>
+        </div>
+    </body>
+</html>

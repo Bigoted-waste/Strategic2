@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>中央对地方专项移动支付区域绩效目标表</title>
+    <<link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+    <div class="_title">
+        <p>index / 中央对地方专项移动支付区域绩效目标表</p>
+    </div>
+
+    <div class="button">
+        <a th:href="@{/allp}"><div class="buttonone">返回</div></a>
+        <a href=""><div class="buttonone">打印</div></a>
+        <a href=""><div class="buttonone">保存</div></a>
+    </div>
+
+    <div class="table_title">
+        <p class="table_title_p18">中央对地方专项移动支付区域绩效目标表</p>
+        <p class="table_title_p_center">(2021)年</p>
+
+        <table>
+            <tr>
+                <td class="table_w110">专项名称</td>
+                <td colspan="4"><input class="table_w550" type="text" value="中央财政支持地方高校改革发展资金-天津职业技术师范大学" /></td>
+            </tr>
+            <tr>
+                <td>中央主管部门</td>
+                <td colspan="4"><input class="table_w550" type="text" value="财政部 教育部"/></td>
+            </tr>
+            <tr>
+                <td>省级财政部门</td>
+                <td class="table_w140"><input class="table_w140" type="text" value=""/></td>
+                <td>省级主管部门</td>
+                <td colspan="2"><input class="input_310" type="text" /></td>
+            </tr>
+            <tr>
+                <td rowspan="3">资金情况<br/>（万元）</td>
+                <td>年度金额：</td>
+                <td colspan="3"><input class="input_410" type="text" value="21.38"/></td>
+            </tr>
+            <tr>
+                <td>其中：中央补助</td>
+                <td colspan="3"><input class="input_410" type="text" value="21.38"/></td>
+            </tr>
+            <tr>
+                <td>地方资金</td>
+                <td colspan="3"><input class="input_410" type="text" value="12"/></td>
+            </tr>
+    
+            <tr>
+                <td>年度总体目标</td>
+                <td colspan="4">
+                    <textarea class="textarea_obj">
+目标1：提高学生的实践能力，改善实训教学的质量。
+目标2：支持大学生创新、创业活动，鼓励学生积极参与各类竞赛，并提供可靠的硬件和软件保障。
+目标3：承担社会化服务的功能，支持国家职业教育师资的培训工作。
+                    </textarea>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td class="table_w70" rowspan="13">绩<br/>效<br/>指<br/>标<br/></td>
+                <td class="table_w25">一级指标</td>
+                <td class="table_w120">二级指标</td>
+                <td class="table_w218">三级指标</td>
+                <td class="table_w165">指标值</td>
+            </tr>
+            <tr>
+                <td rowspan="7">产出指标</td>
+                <td rowspan="4">数量指标</td>
+                <td><input class="input_218" type="text" value="支持的学科数量" /></td>
+                <td><input class="input_165" type="text" value="1" /></td>
+            </tr>
+            <tr>
+                <td><input class="input_218" type="text" value="支持的教学实验室数量" /></td>
+                <td><input class="input_165" type="text" value="1" /></td>
+            </tr>
+            <tr>
+                <td><input class="input_218" type="text" value="在校生技能培训人数" /></td>
+                <td><input class="input_165" type="text" value="1" /></td>         
+            </tr>
+            <tr>
+                <td><input class="input_218" type="text" value="职教师资培训人数" /></td>
+                <td><input class="input_165" type="text" value="1" /></td>        
+            </tr>
+            <tr>
+                <td rowspan="3">质量指标</td>
+                <td><input class="input_218" type="text" value="在校生技能鉴定合格率" /></td>
+                <td><input class="input_165" type="text" value="95%以上" /></td>
+            </tr>
+            <tr>
+                <td><input class="input_218" type="text" value="社会人员培训合格率" /></td>
+                <td><input class="input_165" type="text" value="90%以上" /></td>
+            </tr>
+            <tr>
+                <td><input class="input_218" type="text" value="职教师资培训合格率" /></td>
+                <td><input class="input_165" type="text" value="98%以上" /></td>
+            </tr>
+            <tr>
+                <td rowspan="3">效益指标</td>
+                <td rowspan="2">社会效益指标</td>
+                <td><input class="input_218" type="text" value="受益学生数" /></td>
+                <td><input class="input_165" type="text" value="235人/年" /></td>
+            </tr>
+            <tr>
+                <td><input class="input_218" type="text" value="学生就业" /></td>
+                <td><input class="input_165" type="text" value="辅助提升就业率2%" /></td>
+            </tr>
+            <tr>
+                <td rowspan="1">可持续影响指标</td>
+                <td><input class="input_218" type="text" value="项目持续发挥作用的期限" /></td>
+                <td><input class="input_165" type="text" value="服务年限10年以上" /></td>
+            </tr>
+            <tr>
+                <td rowspan="2">满意度指标</td>
+                <td rowspan="2">服务对象满意度指标</td>
+                <td><input class="input_218" type="text" value="在校生培训满意度" /></td>
+                <td><input class="input_165" type="text" value="95%以上" /></td>
+            </tr>
+            <tr>
+                <td><input class="input_218" type="text" value="职教师资培训满意度" /></td>
+                <td><input class="input_165" type="text" value="90%以上" /></td>
+            </tr>
+    
+        </table>
+    </div>
+
+    
+
+
+</body>
+
+</html>

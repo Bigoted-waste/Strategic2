@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>3</title>
+        <link rel="stylesheet" th:href="@{/css/index.css}" />
+        <link rel="stylesheet" th:href="@{/css/style.css}" />
+    </head>
+    <body>
+        <div class="_title">
+            <p>index / 搜索</p>
+        </div>
+
+        <div class="home_logo">
+        <img th:src="@{/images/hb.png}">
+    </div>
+
+    <div class="nav">
+        <input id="txt" type="text" placeholder="请输入 年-月-日" />
+        <input id="btu" type="button" value="立即获取" />
+    </div>
+
+        <div class="button1">
+            <div class="buttonone1">
+                <a th:href="@{/sm}">
+                    <img th:src="@{/images/1.jpg}" />
+                </a>
+            </div>
+            <div class="buttonone1">
+                <a th:href="@{/allp}" >
+                    <img th:src="@{/images/2.jpg}" />
+                </a>
+            </div>
+            <div class="buttonone1">
+                <a th:href="@{/allp}">
+                    <img th:src="@{/images/3.jpg}" />
+                </a>
+            </div>
+        </div>
+
+    </body>
+</html>

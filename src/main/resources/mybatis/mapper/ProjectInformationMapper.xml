@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cola.mapper.ProjectInformationMapper" >
+
+    <select id="queryAll" resultType="ProjectInformation">
+        select * from PROJECT_INFORMATION
+    </select>
+
+
+    <insert id="addProjectInformation" parameterType="ProjectInformation">
+        insert into PROJECT_INFORMATION
+        (PROJECT_NAME, CREATION_TIME, PROJECT_TYPE, CENTER_FUND, SCHOOL_FUND, LOCAL_FUND)
+        VALUES  (#{project_name},#{creation_time},#{project_type},#{center_fund},#{school_fund},#{local_fund})
+    </insert>
+
+
+    <delete id="delProjectInformation" parameterType="int">
+        delete from PROJECT_INFORMATION where ID=#{id}
+    </delete>
+
+</mapper>
