@@ -8,6 +8,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+/**
+ * @author cola
+ * @version 1.0
+ * @date 2021/10/5 下午7:19
+ */
 public class WordToPDF {
     /**
      * 将文件word文件存储为pdf（存储在word路径下）
