@@ -19,7 +19,61 @@
 			<a href=""><div class="buttonone">全部浏览</div></a>
 			<a href=""><div class="buttonone">全部下载</div></a>
 			<a th:href="@{/ul}"><div class="buttonone">上传</div></a>
+
+            <a href="javascript:;" id="popWin2">
+                <div class="buttonone">上传</div>
+            </a>
 		</div>
+
+        <!-- 弹窗 -->
+<!--        <div id="window2" class="window2 window">-->
+<!--            <div class="tan">-->
+<!--                <div class="close">-->
+<!--                    <img id="close" class="close-img" th:src="@{/images/close.jpg}" height="21" width="21" alt="">-->
+<!--                </div>-->
+
+<!--                <form method="POST" enctype="multipart/form-data" th:action="@{/upload}">-->
+<!--                     <div class="form-group">-->
+<!--                        <label for="exampleInputFile">请输入项目名：</label>-->
+<!--                        <input type="text" id="text" name="pname">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label for="exampleInputFile">&nbsp;&nbsp;&nbsp;&nbsp;请选择文件：</label>-->
+<!--                        <input type="file" name="file" multiple="multiple" id="exampleInputFile"/>-->
+<!--                        &lt;!&ndash; <p class="help-block">Example block-level help text here.</p> &ndash;&gt;-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--                <input id="btn2" class="btn" type="submit" value="上传">-->
+<!--            </div>-->
+<!--        </div>&lt;!&ndash; 弹窗 end &ndash;&gt;-->
+
+<!--        <script th:src="@{/js/jquery-3.3.1.min.js}"></script>-->
+<!--        <script th:src="@{/js/public.js}"></script>-->
+
+<!--        <script>-->
+<!--            /**-->
+<!--             * 调用弹窗函数-->
+<!--             */-->
+<!--            $("#popWin2").click(function() {-->
+<!--                popWin($("#window2"));-->
+<!--            });-->
+<!--            /**-->
+<!--             * 点击关闭图标按钮关闭弹窗-->
+<!--             */-->
+<!--            $("#close").click(function() {-->
+<!--                closeWin($("#window2"));-->
+<!--            });-->
+<!--            /**-->
+<!--             * 点击确定按钮关闭弹窗-->
+<!--             */-->
+<!--            $(".btn").click(function() {-->
+<!--                closeWin($(this).parents(".window"));-->
+<!--            });-->
+<!--        </script>-->
+
+
+
+
 
 
         <div class="_title">
@@ -40,10 +94,10 @@
                         <td th:text="${pm.getId()}"></td>
                         <td th:text="${pm.getProject_name()}"></td>
                         <td>
-<!--                            @{/emp/{id}(id=${emp.getId()})}-->
-                            <a class="application" id="application_1" th:href="@{/gpa}" name="申请表" title="中央财政支持地方高校发展专项资金项目申请书">申请书</a>
-                            <a class="application" id="application_2" th:href="@{/gpo}" name="绩效目标表" title="中央对地方专项转移支付区域效绩目标表">效绩目标表</a>
-                            <a class="application" id="application_3" th:href="@{/gep}" name="购置明细表" title="支持地方高校改革资金设备购置明细表">设备明细表</a>
+<!--                            -->
+                            <a class="application" id="application_1" th:href="@{/gpa/{pName}(pName=${pm.getProject_name()})}" title="中央财政支持地方高校发展专项资金项目申请书">申请书</a>
+                            <a class="application" id="application_2" th:href="@{/gpo/{pName}(pName=${pm.getProject_name()})}" title="中央对地方专项转移支付区域效绩目标表">效绩目标表</a>
+                            <a class="application" id="application_3" th:href="@{/gep/{pName}(pName=${pm.getProject_name()})}" title="支持地方高校改革资金设备购置明细表">设备明细表</a>
 
                         </td>
                         <td th:text="${#dates.format(pm.getCreation_time(),'yyyy-MM-dd')}"></td>
