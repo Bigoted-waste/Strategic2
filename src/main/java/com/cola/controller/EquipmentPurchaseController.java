@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author cola
@@ -24,9 +27,12 @@ import java.io.IOException;
 @Controller
 public class EquipmentPurchaseController {//设备明细表
 
-    @GetMapping("/gep/{pName}")
-    public String GoEquipmentPurchase(@PathVariable("pName")String pName, Model model){
-        String Path="/zlb/ProjectLibrary/"+pName+"/中央对地方专项转移区域绩效目标表.pdf";
+    @GetMapping("/gep/{pName}/{pYear}")
+    public String GoEquipmentPurchase(@PathVariable("pName") String pName, @PathVariable("pYear") Date year, Model model){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+        String format = dateFormat.format(year);
+//        System.out.println("========================>"+format);
+        String Path="/zlb/ProjectLibrary/"+format+"/"+pName+"/中央对地方专项转移区域绩效目标表.pdf";
         model.addAttribute("pname",Path);
         return "template_show.html";
     }

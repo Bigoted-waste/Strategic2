@@ -32,15 +32,16 @@ public class UploadTestController { //上传页面
     }
 
     @PostMapping("/upload")
-    public String uploadTest(@RequestParam("file") MultipartFile[] files,String pname, RedirectAttributes redirectAttributes) {
+    public String uploadTest(@RequestParam("file") MultipartFile[] files, String pname, RedirectAttributes redirectAttributes, String year) {
         String fileAllName = "";
         //创建文件夹
-        fileService.mkdirFileProject(pname);
+        fileService.mkdirFileProject(pname, year);
+        fileService.mkdirPDFProject(pname, year);
         for (MultipartFile file : files) {
             fileAllName += file.getOriginalFilename();
             System.out.println(file.getOriginalFilename());
             try {
-                fileService.uploadFileToLibrary(file,pname);
+                fileService.uploadFileToLibrary(file, pname, year);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ParserConfigurationException e) {
@@ -57,8 +58,8 @@ public class UploadTestController { //上传页面
                 e.printStackTrace();
             }
         }
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + fileAllName + "!");
-        return "redirect:/ul";
+//        redirectAttributes.addFlashAttribute("message",
+//                "You successfully uploaded " + fileAllName + "!");
+        return "redirect:/allp";
     }
 }

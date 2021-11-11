@@ -1,4 +1,7 @@
 spring:
+  mvc:
+    format:
+      date: yyyy-MM-dd
   datasource:
     username: root
     password: 123
@@ -12,7 +15,7 @@ spring:
 server:
   servlet:
     context-path: /zlb
-  port: 9771
+  port: 9772
 
 mybatis:
   type-aliases-package: com.cola.pojo

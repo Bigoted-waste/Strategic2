@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author cola
@@ -17,9 +19,11 @@ import java.io.File;
 @Controller
 public class ProjectApplicationController { //项目申请表
 
-    @GetMapping("/gpa/{pName}")
-    public String GoProjectApplication(@PathVariable("pName")String pName, Model model){
-        String Path="/zlb/ProjectLibrary/"+pName+"/项目申请书.pdf";
+    @GetMapping("/gpa/{pName}/{pYear}")
+    public String GoProjectApplication(@PathVariable("pName") String pName, @PathVariable("pYear") Date year, Model model){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+        String format = dateFormat.format(year);
+        String Path="/zlb/ProjectLibrary/"+format+"/"+pName+"/项目申请书.pdf";
         model.addAttribute("pname",Path);
         return "template_show";
     }

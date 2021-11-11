@@ -4,76 +4,114 @@
     <head>
         <meta charset="UTF-8" />
         <title>所有项目文件</title>
-        <link rel="stylesheet" th:href="@{/css/index.css}" />
+<!--        <link rel="stylesheet" th:href="@{/css/index.css}" />-->
         <link rel="stylesheet" th:href="@{/css/style.css}" />
         <script type="text/javascript">
             function newwindow(){
                 //window.open (".html", "newwindow", "height=100, width=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
             }
         </script>
+
+        <style>
+            *html{
+                background-image:url(about:blank);
+                background-attachment:fixed;
+            }
+
+            /*遮罩层的样式代码*/
+            #zhezhao {
+                width: 100%;
+                height: 100%;
+                _width: expression(eval(document.documentElement.clientWidth));
+                _height: expression(eval(document.documentElement.clientHeight));
+                position: fixed;
+                left: 0;
+                top: 0;
+                _position:absolute;
+                _bottom:auto;
+                _top:expression(eval(document.documentElement.scrollTop));
+                z-index: 500;
+                background-color: #333;
+                filter: alpha(opacity=40);
+                -moz-opacity:0.5;
+                -khtml-opacity: 0.5;
+                opacity: 0.4;
+            }
+
+            input[type="button"] {
+                display: block;
+                color: #FFFFFF;
+                width: 100px;
+                height: 68px;
+                border: none;
+                border-radius: 8px;
+                background-color: #0F83C7;
+            }
+            input[type="button"]:active {
+                box-shadow: inset #000 0px 0px 6px;
+            }
+
+            input[type="text"] {
+                height: 20px;
+                width: 230px;
+            }
+
+            .tan {
+                width: 80%;
+                margin: 0 auto;
+            }
+
+            .form-group{
+                margin-bottom: 20px;
+            }
+
+            .window2 {
+                position: absolute;
+                width: 500px;
+                height: 300px;
+                background-color: #fff;
+                z-index: 999;
+                display: none;
+                border-radius: 10px;
+            }
+            .window2 .tan .close {
+                position: relative;
+                width: 100%;
+                height: 50px;
+            }
+            .window2 .tan .close .close-img {
+                position: absolute;
+                top: 20px;
+                right: 0;
+            }
+            .window2 .tan .text {
+                font-size: 24px;
+                text-align: center;
+                margin: 20px 0;
+            }
+            .window2 .tan .btn {
+                font-size: 28px;
+                width: 100%;
+                margin: 40px auto;
+            }
+        </style>
     </head>
     <body>
 
 
         <div class="button">
-			<a href=""><div class="buttonone">全部浏览</div></a>
-			<a href=""><div class="buttonone">全部下载</div></a>
-			<a th:href="@{/ul}"><div class="buttonone">上传</div></a>
+<!--			<a href=""><div class="buttonone">全部浏览</div></a>-->
+<!--			<a href=""><div class="buttonone">全部下载</div></a>-->
+<!--			<a th:href="@{/ul}"><div class="buttonone">上传</div></a>-->
 
-            <a href="javascript:;" id="popWin2">
+            <a href="#" id="popWin2">
                 <div class="buttonone">上传</div>
             </a>
+
+            <a href="#" id="popWin3">
+                <div class="buttonone">合并</div>
+            </a>
 		</div>
-
-        <!-- 弹窗 -->
-<!--        <div id="window2" class="window2 window">-->
-<!--            <div class="tan">-->
-<!--                <div class="close">-->
-<!--                    <img id="close" class="close-img" th:src="@{/images/close.jpg}" height="21" width="21" alt="">-->
-<!--                </div>-->
-
-<!--                <form method="POST" enctype="multipart/form-data" th:action="@{/upload}">-->
-<!--                     <div class="form-group">-->
-<!--                        <label for="exampleInputFile">请输入项目名：</label>-->
-<!--                        <input type="text" id="text" name="pname">-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="exampleInputFile">&nbsp;&nbsp;&nbsp;&nbsp;请选择文件：</label>-->
-<!--                        <input type="file" name="file" multiple="multiple" id="exampleInputFile"/>-->
-<!--                        &lt;!&ndash; <p class="help-block">Example block-level help text here.</p> &ndash;&gt;-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--                <input id="btn2" class="btn" type="submit" value="上传">-->
-<!--            </div>-->
-<!--        </div>&lt;!&ndash; 弹窗 end &ndash;&gt;-->
-
-<!--        <script th:src="@{/js/jquery-3.3.1.min.js}"></script>-->
-<!--        <script th:src="@{/js/public.js}"></script>-->
-
-<!--        <script>-->
-<!--            /**-->
-<!--             * 调用弹窗函数-->
-<!--             */-->
-<!--            $("#popWin2").click(function() {-->
-<!--                popWin($("#window2"));-->
-<!--            });-->
-<!--            /**-->
-<!--             * 点击关闭图标按钮关闭弹窗-->
-<!--             */-->
-<!--            $("#close").click(function() {-->
-<!--                closeWin($("#window2"));-->
-<!--            });-->
-<!--            /**-->
-<!--             * 点击确定按钮关闭弹窗-->
-<!--             */-->
-<!--            $(".btn").click(function() {-->
-<!--                closeWin($(this).parents(".window"));-->
-<!--            });-->
-<!--        </script>-->
-
-
-
-
 
 
         <div class="_title">
@@ -95,9 +133,9 @@
                         <td th:text="${pm.getProject_name()}"></td>
                         <td>
 <!--                            -->
-                            <a class="application" id="application_1" th:href="@{/gpa/{pName}(pName=${pm.getProject_name()})}" title="中央财政支持地方高校发展专项资金项目申请书">申请书</a>
-                            <a class="application" id="application_2" th:href="@{/gpo/{pName}(pName=${pm.getProject_name()})}" title="中央对地方专项转移支付区域效绩目标表">效绩目标表</a>
-                            <a class="application" id="application_3" th:href="@{/gep/{pName}(pName=${pm.getProject_name()})}" title="支持地方高校改革资金设备购置明细表">设备明细表</a>
+                            <a class="application" id="application_1" th:href="@{'/gpa/'+${pm.getProject_name()}+'/'+${#dates.format(pm.getCreation_time(),'yyyy-MM-dd')}}" title="中央财政支持地方高校发展专项资金项目申请书">申请书</a>
+                            <a class="application" id="application_2" th:href="@{'/gpo/'+${pm.getProject_name()}+'/'+${#dates.format(pm.getCreation_time(),'yyyy-MM-dd')}}" title="中央对地方专项转移支付区域效绩目标表">效绩目标表</a>
+                            <a class="application" id="application_3" th:href="@{'/gep/'+${pm.getProject_name()}+'/'+${#dates.format(pm.getCreation_time(),'yyyy-MM-dd')}}" title="支持地方高校改革资金设备购置明细表">设备明细表</a>
 
                         </td>
                         <td th:text="${#dates.format(pm.getCreation_time(),'yyyy-MM-dd')}"></td>
@@ -109,6 +147,8 @@
                 </table>
             </div>
         </form>
+
+<!--        侧边栏-->
         <div class="button1">
             <div class="buttonone1">
                 <a th:href="@{/sm}">
@@ -126,5 +166,91 @@
                 </a>
             </div>
         </div>
+
+
+        <!--         弹窗 -->
+        <div id="window2" class="window2 window">
+            <div class="tan">
+                <div class="close">
+                    <img id="close" class="close-img" th:src="@{/images/close.jpg}" height="21" width="21" alt="">
+                </div>
+<!--                <div th:if="${message}">-->
+<!--                    <h2 th:text="${message}"/>-->
+<!--                </div>-->
+                <form method="POST" enctype="multipart/form-data" th:action="@{/upload}">
+                    <div class="form-group">
+                        <label for="exampleInputFile">请输入项目名：</label>
+                        <input type="text" id="text" name="pname">
+                    </div>
+                    <label for="exampleInputFile">项目年份：</label>
+                    <select name="year">
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                    </select>
+                    <div class="form-group">
+                        <label for="exampleInputFile">&nbsp;&nbsp;&nbsp;&nbsp;请选择文件：</label>
+                        <input type="file" name="file" multiple="multiple" id="exampleInputFile"/>
+                        <!-- <p class="help-block">Example block-level help text here.</p> -->
+                    </div>
+                    <input id="btn2" class="btn" type="submit" value="上传">
+                </form>
+            </div>
+        </div><!-- 弹窗 end -->
+
+        <!--         弹窗 -->
+        <div id="window3" class="window2 window">
+            <div class="tan">
+                <div class="close">
+                    <img id="close" class="close-img" th:src="@{/images/close.jpg}" height="21" width="21" alt="">
+                </div>
+<!--                <div th:if="${message}">-->
+<!--                    <h2 th:text="${message}"/>-->
+<!--                </div>-->
+                <form method="POST" th:action="@{/merge}">
+                    <div class="form-group">
+                        <label for="exampleInputFile">请输入所要合并的年份：</label>
+                        <select name="year">
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                        </select>
+                    </div>
+                    <input id="btn2" class="btn" type="submit" value="提交">
+                </form>
+            </div>
+        </div><!-- 弹窗 end -->
+
+        <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+        <script th:src="@{/js/public.js}"></script>
+
+
+
+        <script>
+            /**
+             * 调用弹窗函数
+             */
+            $("#popWin3").click(function() {
+                popWin($("#window3"));
+            });
+            /**
+             * 调用弹窗函数
+             */
+            $("#popWin2").click(function() {
+                popWin($("#window2"));
+            });
+            /**
+             * 点击关闭图标按钮关闭弹窗
+             */
+            $("#close").click(function() {
+                closeWin($("#window2"));
+            });
+            /**
+             * 点击确定按钮关闭弹窗
+             */
+            $(".btn").click(function() {
+                closeWin($(this).parents(".window"));
+            });
+        </script>
     </body>
 </html>

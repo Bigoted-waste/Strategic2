@@ -16,15 +16,16 @@ import java.io.InputStream;
 public class WordToPDF {
     /**
      * 将文件word文件存储为pdf（存储在word路径下）
-     * @param filePath  文件路径
-     * @param fileName  文件名称
+     *
+     * @param filePath 文件路径
+     * @param fileName 文件名称
      * @return
      * @throws Exception
      */
     public String convert(String filePath, String fileName) throws Exception {   //, String urlRoot
         setLicense();
         String name = fileName.substring(0, fileName.lastIndexOf("."));
-        String pdfPath = String.format("%s/%s.pdf", filePath, name);
+        String pdfPath = String.format("%s/%s.pdf", "src/main/resources/static/" + filePath, name);
         String wordPath = String.format("%s/%s", filePath, fileName);
 
         File file = new File(pdfPath);
@@ -40,6 +41,7 @@ public class WordToPDF {
 
     /**
      * 获取相对路径
+     *
      * @param path
      * @return
      */
@@ -50,6 +52,7 @@ public class WordToPDF {
 
     /**
      * 获取许可证
+     *
      * @throws Exception
      */
     private static void setLicense() throws Exception {

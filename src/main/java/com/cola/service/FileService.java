@@ -1,6 +1,10 @@
 package com.cola.service;
 
 import com.cola.pojo.ProjectInformation;
+import org.apache.pdfbox.io.MemoryUsageSetting;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.poi.POIXMLDocument;
 import org.apache.poi.POIXMLTextExtractor;
 import org.apache.poi.hwpf.extractor.WordExtractor;
@@ -14,10 +18,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author cola
@@ -34,14 +41,19 @@ public class FileService {
 
     private final String ALL_PROJECT_PATH = "ProjectLibrary/";
 
+
     /**
      * 按照项目名称建立项目库
      *
-     * @param projectName   项目名称
+     * @param projectName 项目名称
      * @return
      */
-    public boolean mkdirFileProject(String projectName) {
-        File file = new File(ALL_PROJECT_PATH + projectName);
+    public boolean mkdirFileProject(String projectName, String year) {
+        File base = new File(ALL_PROJECT_PATH + year);
+        if (!base.exists()) {
+            base.mkdir();
+        }
+        File file = new File(ALL_PROJECT_PATH + year + "/" + projectName);
         if (!file.exists()) {//如果文件夹不存在
             file.mkdir();//创建文件夹
             return true;
@@ -50,20 +62,43 @@ public class FileService {
     }
 
     /**
+     * 创建pdf文件夹
+     *
+     * @param projectName
+     * @return
+     */
+    public boolean mkdirPDFProject(String projectName, String year) {
+        File base = new File("src/main/resources/static/" + ALL_PROJECT_PATH + year);
+        if (!base.exists()) {
+            base.mkdir();
+        }
+        File file = new File("src/main/resources/static/" + ALL_PROJECT_PATH + year + "/" + projectName);
+        if (!file.exists()) {//如果文件夹不存在
+            file.mkdir();//创建文件夹
+            return true;
+        } else
+            return false;
+    }
+
+
+    /**
      * 将文件存储到文件库中
+     *
      * @param file
      * @param projectName
      * @throws Exception
      */
-    public void uploadFileToLibrary(MultipartFile file, String projectName) throws Exception {
-        String filePath = ALL_PROJECT_PATH + projectName + "/";
+    public void uploadFileToLibrary(MultipartFile file, String projectName, String year) throws Exception {
+        String filePath = ALL_PROJECT_PATH + year + "/" + projectName + "/";
+        String PDFPath = "src/main/resources/static/" + ALL_PROJECT_PATH + year + "/" + projectName;
+        System.out.println("===============PDF--PATH===================>" + PDFPath);
         WordToPDF wordToPDF = new WordToPDF();
         if (file.getOriginalFilename().indexOf("申请书") != -1) {
             //1、将文件落本地库中
             String path = toFile(file, filePath, "项目申请书");
-            if(file.getName().endsWith(".doc")) {
+            if (file.getName().endsWith(".doc")) {
                 wordToPDF.convert(filePath, "项目申请书.doc");
-            }else {
+            } else {
                 wordToPDF.convert(filePath, "项目申请书.docx");
             }
             System.out.println(path);
@@ -72,11 +107,11 @@ public class FileService {
             List<String> strings = readWord(path);
             //将数据解析成map
             Map<String, String> projectMap = analysisWord(strings);
-            //TODO 落库
-//
             DateFormat fmt = new SimpleDateFormat("yyyy年MM月dd日");
             Date date = null;
             date = fmt.parse(projectMap.get("time"));
+            System.out.println("转换之前的===================>" + projectMap.get("time"));
+            System.out.println("转化之后的===================>" + date);
             ProjectInformation projectInformation = new ProjectInformation(
                     projectMap.get("name"),
                     date,
@@ -92,14 +127,14 @@ public class FileService {
             toFile(file, filePath, "中央对地方专项转移区域绩效目标表");
             if (file.getName().endsWith(".doc")) {
                 wordToPDF.convert(filePath, "中央对地方专项转移区域绩效目标表.doc");
-            }else {
+            } else {
                 wordToPDF.convert(filePath, "中央对地方专项转移区域绩效目标表.docx");
             }
         } else if (file.getOriginalFilename().indexOf("购置明细表") != -1) {
             toFile(file, filePath, "支持地方高校改革发展资金设备购置明细表");
-            if(file.getName().endsWith(".doc")) {
+            if (file.getName().endsWith(".doc")) {
                 wordToPDF.convert(filePath, "支持地方高校改革发展资金设备购置明细表.doc");
-            }else {
+            } else {
                 wordToPDF.convert(filePath, "支持地方高校改革发展资金设备购置明细表.docx");
             }
         }
@@ -204,7 +239,7 @@ public class FileService {
     /**
      * 将文件解析成list字符串
      *
-     * @param filePath  //文件路径
+     * @param filePath //文件路径
      * @return
      */
     public List<String> readWord(String filePath) throws IOException, OpenXML4JException, XmlException {
@@ -240,6 +275,52 @@ public class FileService {
             return null;
         }
         return linList;
+    }
+
+    public File mergeDocuments(String path, String filePath) throws IOException {
+        PDFMergerUtility pdf = new PDFMergerUtility();
+//        for (File f : files.listFiles()) {
+////            if (f.getName().contains("汇总")) {
+////                continue;
+////            }
+//            if (f.exists() && f.isFile()) {
+//                pdf.addSource(f);
+//            }
+//        }
+
+        //便利文件数
+        AtomicInteger pdfCount = new AtomicInteger();
+        Files.walkFileTree(Paths.get(path), new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                if (file.toString().endsWith(".pdf")) {
+                    pdfCount.incrementAndGet();
+                    pdf.addSource(file.toFile());
+                }
+                return super.visitFile(file, attrs);
+            }
+        });
+
+
+        // 设置合并生成pdf文件名称
+        pdf.setDestinationFileName(filePath);
+        // 开始合并pdf
+//        pdf.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
+        pdf.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
+        File file = new File(filePath);
+        //加载PDF
+        PDDocument document = PDDocument.load(file);
+        AccessPermission accessPermission = new AccessPermission();
+        accessPermission.setCanPrint(true);
+        accessPermission.setCanModify(false);
+        accessPermission.setCanExtractContent(false);
+//        StandardProtectionPolicy spp  = new StandardProtectionPolicy("编辑pdf需要密码",null, accessPermission);
+//        spp.setEncryptionKeyLength(256);
+//        spp.setPermissions(accessPermission);
+//        document.protect(spp);
+        document.save(filePath);
+        document.close();
+        return file;
     }
 
 

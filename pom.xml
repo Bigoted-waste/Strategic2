@@ -75,6 +75,17 @@
             <version>2.0.1</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>com.itextpdf</groupId>-->
+<!--            <artifactId>itextpdf</artifactId>-->
+<!--            <version>5.5.13.2</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.14</version>
+        </dependency>
 <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.poi/poi &ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>org.apache.poi</groupId>-->
